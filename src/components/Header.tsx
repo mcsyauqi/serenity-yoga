@@ -19,38 +19,42 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[#FAF8F5]/95 backdrop-blur-sm shadow-sm">
-      <nav className="container mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-[#7C9A92] rounded-full flex items-center justify-center">
-              <span className="text-white font-heading text-xl">S</span>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#FAF8F5]/95 backdrop-blur-sm border-b border-[#E8D5B7]/30">
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 sm:h-20">
+          <Link href="/" className="flex items-center gap-2 shrink-0">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 bg-[#7C9A92] rounded-full flex items-center justify-center">
+              <span className="text-white font-heading text-lg sm:text-xl font-semibold">S</span>
             </div>
-            <div>
+            <div className="hidden sm:block">
               <span className="font-heading text-xl font-semibold text-[#3D405B]">Serenity</span>
               <span className="font-heading text-xl font-light text-[#7C9A92] ml-1">Yoga</span>
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-[#3D405B] hover:text-[#7C9A92] transition-colors font-medium"
+                className="px-4 py-2 text-[#3D405B] hover:text-[#7C9A92] transition-colors text-sm font-medium rounded-lg hover:bg-[#7C9A92]/5"
               >
                 {link.label}
               </Link>
             ))}
-            <Link href="/kontak" className="btn-primary">
+          </div>
+
+          <div className="hidden lg:block">
+            <Link
+              href="/kontak"
+              className="inline-flex items-center px-5 py-2.5 bg-[#7C9A92] text-white text-sm font-semibold rounded-full hover:bg-[#6a8880] transition-colors"
+            >
               Coba Gratis
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
           <button
-            className="lg:hidden text-[#3D405B] p-2"
+            className="lg:hidden p-2 text-[#3D405B] hover:bg-[#7C9A92]/10 rounded-lg transition-colors"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
@@ -58,33 +62,35 @@ export default function Header() {
           </button>
         </div>
 
-        {/* Mobile Navigation */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="lg:hidden mt-4 pb-4"
+              transition={{ duration: 0.2 }}
+              className="lg:hidden border-t border-[#E8D5B7]/30"
             >
-              <div className="flex flex-col gap-4">
+              <div className="py-4 space-y-1">
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="text-[#3D405B] hover:text-[#7C9A92] transition-colors font-medium py-2"
+                    className="block px-4 py-3 text-[#3D405B] hover:text-[#7C9A92] hover:bg-[#7C9A92]/5 transition-colors font-medium rounded-lg"
                     onClick={() => setIsOpen(false)}
                   >
                     {link.label}
                   </Link>
                 ))}
-                <Link
-                  href="/kontak"
-                  className="btn-primary text-center mt-2"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Coba Gratis
-                </Link>
+                <div className="pt-4 px-4">
+                  <Link
+                    href="/kontak"
+                    className="block w-full text-center px-5 py-3 bg-[#7C9A92] text-white font-semibold rounded-full hover:bg-[#6a8880] transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Coba Gratis
+                  </Link>
+                </div>
               </div>
             </motion.div>
           )}
