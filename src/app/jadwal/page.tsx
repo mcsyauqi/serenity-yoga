@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Clock, User, ArrowRight, Calendar, Users } from 'lucide-react';
 import { useState } from 'react';
@@ -66,47 +65,63 @@ export default function JadwalPage() {
   const [selectedDay, setSelectedDay] = useState("Senin");
 
   return (
-    <div>
-      <section className="py-16 lg:py-20 bg-gradient-to-br from-[#7C9A92]/10 via-[#FAF8F5] to-[#E8D5B7]/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="text-center max-w-2xl mx-auto">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-semibold text-[#3D405B] mb-4">Jadwal Kelas</h1>
-            <p className="text-gray-600">Pilih waktu yang sesuai dengan jadwal Anda. Kami menyediakan kelas dari pagi hingga malam.</p>
-          </motion.div>
+    <main className="pt-16">
+      <section className="py-16 bg-gradient-to-br from-primary/5 to-secondary/20">
+        <div className="max-w-6xl mx-auto px-4 text-center">
+          <h1 className="font-[family-name:var(--font-heading)] text-4xl font-semibold text-text mb-3">Jadwal Kelas</h1>
+          <p className="text-gray-600 max-w-xl mx-auto">Pilih waktu yang sesuai dengan jadwal Anda</p>
         </div>
       </section>
 
-      <section className="py-12 lg:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16">
+        <div className="max-w-6xl mx-auto px-4">
           <div className="flex flex-wrap justify-center gap-2 mb-8">
             {hari.map((day) => (
-              <button key={day} onClick={() => setSelectedDay(day)} className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-sm font-medium transition-all ${selectedDay === day ? 'bg-[#7C9A92] text-white' : 'bg-white text-[#3D405B] hover:bg-[#E8D5B7]/50'}`}>
+              <button
+                key={day}
+                onClick={() => setSelectedDay(day)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                  selectedDay === day ? 'bg-primary text-white' : 'bg-white text-text hover:bg-secondary/50'
+                }`}
+              >
                 {day}
               </button>
             ))}
           </div>
 
-          <motion.div key={selectedDay} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="bg-white rounded-xl shadow-sm overflow-hidden">
+          <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-[#7C9A92] text-white">
+                <thead className="bg-primary text-white">
                   <tr>
-                    <th className="px-4 sm:px-6 py-3 text-left text-sm font-medium">Waktu</th>
-                    <th className="px-4 sm:px-6 py-3 text-left text-sm font-medium">Kelas</th>
-                    <th className="px-4 sm:px-6 py-3 text-left text-sm font-medium hidden sm:table-cell">Instruktur</th>
-                    <th className="px-4 sm:px-6 py-3 text-left text-sm font-medium hidden md:table-cell">Durasi</th>
-                    <th className="px-4 sm:px-6 py-3 text-left text-sm font-medium">Level</th>
+                    <th className="px-4 py-3 text-left text-sm font-medium">Waktu</th>
+                    <th className="px-4 py-3 text-left text-sm font-medium">Kelas</th>
+                    <th className="px-4 py-3 text-left text-sm font-medium hidden sm:table-cell">Instruktur</th>
+                    <th className="px-4 py-3 text-left text-sm font-medium hidden md:table-cell">Durasi</th>
+                    <th className="px-4 py-3 text-left text-sm font-medium">Level</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {jadwalHarian[selectedDay].map((item, index) => (
-                    <tr key={index} className="border-b border-gray-100 hover:bg-[#FAF8F5]/50 transition-colors">
-                      <td className="px-4 sm:px-6 py-3"><span className="flex items-center gap-1.5 text-[#7C9A92] font-semibold text-sm"><Clock size={14} />{item.waktu}</span></td>
-                      <td className="px-4 sm:px-6 py-3 font-medium text-[#3D405B] text-sm">{item.kelas}</td>
-                      <td className="px-4 sm:px-6 py-3 hidden sm:table-cell"><span className="flex items-center gap-1.5 text-gray-600 text-sm"><User size={14} />{item.instruktur}</span></td>
-                      <td className="px-4 sm:px-6 py-3 text-gray-600 text-sm hidden md:table-cell">{item.durasi}</td>
-                      <td className="px-4 sm:px-6 py-3">
-                        <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${item.level === 'All' ? 'bg-green-100 text-green-700' : item.level === 'Int' ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700'}`}>
+                  {jadwalHarian[selectedDay].map((item, i) => (
+                    <tr key={i} className="border-b border-gray-100 hover:bg-background/50 transition-colors">
+                      <td className="px-4 py-3">
+                        <span className="flex items-center gap-1 text-primary font-semibold text-sm">
+                          <Clock size={14} />{item.waktu}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 font-medium text-text text-sm">{item.kelas}</td>
+                      <td className="px-4 py-3 hidden sm:table-cell">
+                        <span className="flex items-center gap-1 text-gray-600 text-sm">
+                          <User size={14} />{item.instruktur}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-gray-600 text-sm hidden md:table-cell">{item.durasi}</td>
+                      <td className="px-4 py-3">
+                        <span className={`px-2 py-0.5 rounded text-xs font-medium ${
+                          item.level === 'All' ? 'bg-green-100 text-green-700' :
+                          item.level === 'Int' ? 'bg-yellow-100 text-yellow-700' :
+                          'bg-red-100 text-red-700'
+                        }`}>
                           {item.level === 'All' ? 'Semua' : item.level === 'Int' ? 'Menengah' : 'Lanjutan'}
                         </span>
                       </td>
@@ -115,45 +130,62 @@ export default function JadwalPage() {
                 </tbody>
               </table>
             </div>
-          </motion.div>
+          </div>
 
           <div className="mt-6 flex flex-wrap justify-center gap-4 text-sm">
-            <div className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full bg-green-500"></span><span className="text-gray-600">Semua Level</span></div>
-            <div className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full bg-yellow-500"></span><span className="text-gray-600">Menengah</span></div>
-            <div className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full bg-red-500"></span><span className="text-gray-600">Lanjutan</span></div>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-green-500"></span>
+              <span className="text-gray-600">Semua Level</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-yellow-500"></span>
+              <span className="text-gray-600">Menengah</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-red-500"></span>
+              <span className="text-gray-600">Lanjutan</span>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="py-12 lg:py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid sm:grid-cols-3 gap-6">
-            <div className="text-center p-5">
-              <div className="w-14 h-14 bg-[#7C9A92]/10 rounded-full flex items-center justify-center mx-auto mb-3"><Calendar className="text-[#7C9A92]" size={28} /></div>
-              <h3 className="font-heading text-lg font-semibold text-[#3D405B] mb-2">Booking Mudah</h3>
+      <section className="py-16 bg-white">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="text-center p-6">
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Calendar className="text-primary" size={24} />
+              </div>
+              <h3 className="font-[family-name:var(--font-heading)] text-lg font-semibold text-text mb-2">Booking Mudah</h3>
               <p className="text-gray-600 text-sm">Reservasi minimal 2 jam sebelum kelas via WhatsApp</p>
             </div>
-            <div className="text-center p-5">
-              <div className="w-14 h-14 bg-[#7C9A92]/10 rounded-full flex items-center justify-center mx-auto mb-3"><Users className="text-[#7C9A92]" size={28} /></div>
-              <h3 className="font-heading text-lg font-semibold text-[#3D405B] mb-2">Kelas Kecil</h3>
+            <div className="text-center p-6">
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Users className="text-primary" size={24} />
+              </div>
+              <h3 className="font-[family-name:var(--font-heading)] text-lg font-semibold text-text mb-2">Kelas Kecil</h3>
               <p className="text-gray-600 text-sm">Maksimal 15 peserta untuk perhatian personal</p>
             </div>
-            <div className="text-center p-5">
-              <div className="w-14 h-14 bg-[#7C9A92]/10 rounded-full flex items-center justify-center mx-auto mb-3"><Clock className="text-[#7C9A92]" size={28} /></div>
-              <h3 className="font-heading text-lg font-semibold text-[#3D405B] mb-2">Fleksibel</h3>
+            <div className="text-center p-6">
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Clock className="text-primary" size={24} />
+              </div>
+              <h3 className="font-[family-name:var(--font-heading)] text-lg font-semibold text-text mb-2">Fleksibel</h3>
               <p className="text-gray-600 text-sm">Batalkan hingga 4 jam sebelum tanpa penalti</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-12 lg:py-16 bg-[#7C9A92]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-heading font-semibold text-white mb-3">Siap Bergabung?</h2>
+      <section className="py-16 bg-primary">
+        <div className="max-w-6xl mx-auto px-4 text-center">
+          <h2 className="font-[family-name:var(--font-heading)] text-3xl font-semibold text-white mb-3">Siap Bergabung?</h2>
           <p className="text-white/80 mb-6">Hubungi kami untuk reservasi atau informasi lebih lanjut</p>
-          <Link href="/kontak" className="inline-flex items-center gap-2 bg-white text-[#7C9A92] px-6 py-3 rounded-full font-semibold hover:bg-[#E8D5B7] transition-all">Hubungi Kami <ArrowRight size={18} /></Link>
+          <Link href="/kontak" className="inline-flex items-center gap-2 bg-white text-primary px-6 py-3 rounded-full font-medium hover:bg-secondary transition-colors">
+            Hubungi Kami <ArrowRight size={18} />
+          </Link>
         </div>
       </section>
-    </div>
+    </main>
   );
 }
